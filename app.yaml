@@ -25,6 +25,7 @@ handlers:
 
 - url: .*
   script: gaepypi.app
+  #script: auto
 
 libraries:
 - name: webapp2

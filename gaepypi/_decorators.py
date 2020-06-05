@@ -27,7 +27,9 @@ def basic_auth(required_roles=None):
     def decorator_basic_auth(func):
         def callf(handler, *args, **kwargs):
             auth_header = handler.request.headers.get('Authorization')
-            if auth_header is None:
+            if auth_header is None and required_roles is None:
+                return func(handler, *args, **kwargs)
+            elif auth_header is None:
                 __basic_login(handler)
             else:
                 parts = base64.b64decode(auth_header.split(' ')[1]).split(':')
